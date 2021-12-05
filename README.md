@@ -20,7 +20,7 @@
   4. CLIENT_SECRET=<oauth_client_secret>
   5. AUTH_ENDPOINT=https://github.com/login/oauth/authorize
   6. TOKEN_ENDPOINT=https://github.com/login/oauth/access_token
-  7. REVOCATION_ENDPOINT=https://github.com/settings/connections/applications/1a3beb81c84baad211ca
+  7. REVOCATION_ENDPOINT=https://github.com/settings/connections/applications/<oauth_client_id>
 
 - Create your own oauth github app
 
