@@ -1,21 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { Root } from "native-base";
+import { useFonts } from "expo-font";
+import { LogBox } from "react-native";
+import { Provider } from "react-redux";
+import { decode, encode } from "base-64";
+import EStyleSheet from "react-native-extended-stylesheet";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import { store } from "./app/store";
+import Navigator from "./app/config/routes";
+import { PRE_LOAD_FONTS } from "./app/assets/assetsList";
+
+//Ignore warnings
+LogBox.ignoreAllLogs();
+
+// btoa
+if (!global.btoa) {
+  global.btoa = encode;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+if (!global.atob) {
+  global.atob = decode;
+}
+
+// Adding EStylesheet
+EStyleSheet.build();
+
+export default function App() {
+  //Loading Fonts
+  let [fontsLoaded] = useFonts(PRE_LOAD_FONTS);
+  return fontsLoaded ? (
+    <Provider store={store}>
+      <Root>
+        <Navigator />
+      </Root>
+    </Provider>
+  ) : null;
+}
